@@ -1,15 +1,14 @@
 package com.company;
 
+import com.company.Books.ChildrenBook;
 import com.company.Books.ScientificBook;
-import com.company.Halls.List;
+import com.company.Halls.ChildrenLibraryHall;
 import com.company.Halls.ScientificLibraryHall;
-import com.company.Librarys.BidirectionalList;
 import com.company.Librarys.ChildrenLibrary;
 import com.company.Librarys.ILibrary;
 import com.company.Librarys.ScientificLibrary;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Libraries {
@@ -71,7 +70,7 @@ public class Libraries {
                         book.setYear(scanner.nextInt());
                         scanner.nextLine();
 
-                        book.setCitationIndex(12.0);
+                        book.setCitationIndex(scanner.nextDouble());
                         scanner.nextLine();
 
                         library.getLibraryHallsByID(i).addBook(book, j);
@@ -80,6 +79,36 @@ public class Libraries {
                 return library;
             } else if (buffer.equals("children")) {
                 library = new ChildrenLibrary();
+                //Запись библиотеки
+                library.setNumHalls(scanner.nextInt());
+                scanner.nextLine();
+                int intBuffer = 0;
+                //Запись Зала
+                for (int i = 0; i < library.getNumHalls(); i++) {
+                    library.getLibraryHalls().addToEnd(new ChildrenLibraryHall());
+                    library.getLibraryHallsByID(i).setName(scanner.nextLine());
+                    intBuffer = scanner.nextInt();
+                    scanner.nextLine();
+                    //Запись Книги
+                    for (int j = 0; j < intBuffer; j++) {
+                        ChildrenBook book = new ChildrenBook();
+
+                        book.setAuthor(scanner.nextLine());
+
+                        book.setName(scanner.nextLine());
+
+                        book.setCost(scanner.nextInt());
+                        scanner.nextLine();
+
+                        book.setYear(scanner.nextInt());
+                        scanner.nextLine();
+
+                        book.setMinimalAge(scanner.nextInt());
+                        scanner.nextLine();
+
+                        library.getLibraryHallsByID(i).addBook(book, j);
+                    }
+                }
                 return library;
             } else {
                 System.err.println("INCORRECT TYPE OF LIBRARY");
