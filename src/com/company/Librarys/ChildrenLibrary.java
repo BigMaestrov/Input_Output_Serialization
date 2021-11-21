@@ -1,26 +1,20 @@
 package com.company.Librarys;
 
 import com.company.Books.IBook;
-import com.company.Books.ScientificBook;
+import com.company.Books.ChildrenBook;
 import com.company.Exceptions.BookIndexOutOfBoundsException;
 import com.company.Exceptions.HallIndexOutOfBoundsException;
 import com.company.Halls.IHall;
-import com.company.Halls.ScientificLibraryHall;
 
 import java.io.IOException;
 import java.io.Writer;
 
-public class ScientificLibrary implements ILibrary{
+public class ChildrenLibrary implements ILibrary{
     int numHalls;
-    BidirectionalList scientificLibraryHalls;
+    BidirectionalList childrenBooks;
 
     public String getType(){
-        return "science";
-    }
-
-    public ScientificLibrary() {
-        setNumHalls(0);
-        setLibraryHalls(new BidirectionalList());
+        return "children";
     }
 
     public int getNumHalls() {
@@ -32,11 +26,11 @@ public class ScientificLibrary implements ILibrary{
     }
 
     public BidirectionalList getLibraryHalls() {
-        return scientificLibraryHalls;
+        return childrenBooks;
     }
 
     public IHall getLibraryHallsByID(int id) {
-        return scientificLibraryHalls.getItemByID(id).getData();
+        return childrenBooks.getItemByID(id).getData();
     }
 
     public IBook getBookByID(int id)throws BookIndexOutOfBoundsException {
@@ -46,9 +40,9 @@ public class ScientificLibrary implements ILibrary{
         IBook[] booksInLibrary = new IBook[sumOfAllBooks()];
         int numBookInLibrary = 0;
         //Запись в новый массив
-        for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
-            for (int j = 0; j < scientificLibraryHalls.getItemByID(i).getData().getBooks().getLength(); j++) {
-                booksInLibrary[numBookInLibrary] = scientificLibraryHalls.getItemByID(i).getData().getBookByID(j);
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
+            for (int j = 0; j < childrenBooks.getItemByID(i).getData().getBooks().getLength(); j++) {
+                booksInLibrary[numBookInLibrary] = childrenBooks.getItemByID(i).getData().getBookByID(j);
                 numBookInLibrary++;
             }
         }
@@ -56,26 +50,28 @@ public class ScientificLibrary implements ILibrary{
     }
 
     public void setLibraryHalls(BidirectionalList scientificLibraryHalls) {
-        this.scientificLibraryHalls = null;
-        this.scientificLibraryHalls = new BidirectionalList();
+        this.childrenBooks = null;
+        this.childrenBooks = new BidirectionalList();
         for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
 
-            this.scientificLibraryHalls.addToEnd(scientificLibraryHalls.getItemByID(i).getData());
+            this.childrenBooks.addToEnd(scientificLibraryHalls.getItemByID(i).getData());
         }
     }
 
-    public ScientificLibrary(BidirectionalList scientificLibraryHalls) {
+    public ChildrenLibrary(BidirectionalList scientificLibraryHalls) {
         setNumHalls(scientificLibraryHalls.getLength());
         setLibraryHalls(scientificLibraryHalls);
     }
 
-
+    public ChildrenLibrary() {
+        setNumHalls(0);
+    }
 
     public int sumOfAllBooks() {
         int numBook = 0;
         for (int i = 0; i < getNumHalls(); i++) {
             numBook +=
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().getLength();
+                    childrenBooks.getItemByID(i).getData().getBooks().getLength();
         }
         return numBook;
     }
@@ -84,10 +80,10 @@ public class ScientificLibrary implements ILibrary{
         IBook[] booksInLibrary = new IBook[sumOfAllBooks()];
         int numBookInLibrary = 0;
         //Запись в новый массив
-        for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
             for (int j = 0; j <
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().getLength(); j++) {
-                booksInLibrary[numBookInLibrary] = scientificLibraryHalls.getItemByID(i).getData().getBookByID(j);
+                    childrenBooks.getItemByID(i).getData().getBooks().getLength(); j++) {
+                booksInLibrary[numBookInLibrary] = childrenBooks.getItemByID(i).getData().getBookByID(j);
                 numBookInLibrary++;
             }
         }
@@ -114,8 +110,8 @@ public class ScientificLibrary implements ILibrary{
     public void printNamesAndNumBooksOfHalls() {
         for (int i = 0; i < getNumHalls(); i++) {
             System.out.println("Name:" +
-                    scientificLibraryHalls.getItemByID(i).getData().getName() + ", NumOfBook:" +
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().getLength());
+                    childrenBooks.getItemByID(i).getData().getName() + ", NumOfBook:" +
+                    childrenBooks.getItemByID(i).getData().getBooks().getLength());
         }
     }
 
@@ -123,20 +119,20 @@ public class ScientificLibrary implements ILibrary{
         if(numHall<0 || numHall>getNumHalls()){
             throw new HallIndexOutOfBoundsException();
         }
-        scientificLibraryHalls.removeByID(numHall);
-        scientificLibraryHalls.addByID(numHall, newHall);
+        childrenBooks.removeByID(numHall);
+        childrenBooks.addByID(numHall, newHall);
     }
 
     public void changeBookByID(int num, IBook book) {
         int IDofBook = 0;
         //Запись в новый массив
-        for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
             for (int j = 0; j <
 
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().getLength(); j++){
+                    childrenBooks.getItemByID(i).getData().getBooks().getLength(); j++){
                 if (num == IDofBook) {
 
-                    scientificLibraryHalls.getItemByID(i).getData().redactBook(book, j);
+                    childrenBooks.getItemByID(i).getData().redactBook(book, j);
                 }
                 IDofBook++;
             }
@@ -151,12 +147,12 @@ public class ScientificLibrary implements ILibrary{
             return;
         }
         int numBookInLibrary = 0;
-        for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
             for (int j = 0; j <
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().getLength(); j++, numBookInLibrary++) {
+                    childrenBooks.getItemByID(i).getData().getBooks().getLength(); j++, numBookInLibrary++) {
                 if (numBookInLibrary == number) {
 
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().addByID(number, book);
+                    childrenBooks.getItemByID(i).getData().getBooks().addByID(number, book);
                 }
             }
         }
@@ -170,30 +166,31 @@ public class ScientificLibrary implements ILibrary{
             return;
         }
         int numBookInLibrary = 0;
-        for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
             for (int j = 0; j <
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().getLength(); j++, numBookInLibrary++) {
+                    childrenBooks.getItemByID(i).getData().getBooks().getLength(); j++, numBookInLibrary++) {
                 if (numBookInLibrary == number) {
 
-                    scientificLibraryHalls.getItemByID(i).getData().getBooks().removeByID(number);
+                    childrenBooks.getItemByID(i).getData().getBooks().removeByID(number);
                 }
             }
         }
     }
 
     public IBook getBestBook() {
-        IBook bestBook = new ScientificBook();
-        for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
+        IBook bestBook = new ChildrenBook();
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
             if (bestBook.getCost() <
-                    scientificLibraryHalls.getItemByID(i).getData().getBestBook().getCost())
-                bestBook = scientificLibraryHalls.getItemByID(i).getData().getBestBook();
+                    childrenBooks.getItemByID(i).getData().getBestBook().getCost())
+                bestBook = childrenBooks.getItemByID(i).getData().getBestBook();
         }
         return bestBook;
     }
 
     public void printBooks() {
-        for (int i = 0; i < scientificLibraryHalls.getLength(); i++) {
-            scientificLibraryHalls.getItemByID(i).getData().printBooks();
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
+
+            childrenBooks.getItemByID(i).getData().printBooks();
         }
     }
 
@@ -207,7 +204,7 @@ public class ScientificLibrary implements ILibrary{
         String buffer = "";
         buffer+=getLibraryHalls().getLength()+"\n";
         for(int i=0;i<getLibraryHalls().getLength();i++){
-            buffer+=getLibraryHallsByID(i).toString();
+            buffer+=getBookByID(i).toString();
         }
         return buffer;
     }

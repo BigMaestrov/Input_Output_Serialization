@@ -3,8 +3,10 @@ package com.company.Librarys;
 import com.company.Halls.IHall;
 import com.company.Halls.ScientificLibraryHall;
 
-public class BidirectionalList{
-    class Item {
+import java.io.Serializable;
+
+public class BidirectionalList implements Serializable {
+    class Item implements Serializable{
         private IHall data;
         private BidirectionalList.Item next;
         private BidirectionalList.Item prev;
@@ -13,7 +15,7 @@ public class BidirectionalList{
                 nextItem, BidirectionalList.Item prevItem) {
             //копируем поля из параметра st в поле data
             data= new ScientificLibraryHall();
-            data.setScientificBooks(st.getScientificBooks());
+            data.setBooks(st.getBooks());
             data.setName(st.getName());
             //Устанавливаем указатель последнего на голову
             this.next = nextItem;
@@ -59,7 +61,7 @@ public class BidirectionalList{
     public void addToEnd(IHall st) {
         length++;
         BidirectionalList.Item prev = Head;
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length-1; i++) {
             prev = prev.next;
         }
         prev.next = new BidirectionalList.Item((ScientificLibraryHall) st, prev.next,prev);

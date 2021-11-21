@@ -2,6 +2,10 @@ package com.company.Books;
 
 import com.company.Exceptions.InvalidBookPriceException;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+
 public class Book implements IBook {
     private String author;
     private String name;
@@ -63,6 +67,14 @@ public class Book implements IBook {
     public String toString() {
         return getAuthor() + " " + getName() + " " + getCost() + " " +
                 getYear();
+    }
+
+    public void writeInFile(Writer out) {
+        try {
+            out.write(this.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

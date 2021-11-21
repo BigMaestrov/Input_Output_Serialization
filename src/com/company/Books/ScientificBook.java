@@ -1,5 +1,8 @@
 package com.company.Books;
 
+import java.io.IOException;
+import java.io.Writer;
+
 public class ScientificBook extends Book {
     private double citationIndex;
     public double getCitationIndex() {
@@ -25,8 +28,20 @@ public class ScientificBook extends Book {
         return book.getAuthor() + " " + book.getName() + " " +
                 book.getCost() + " " + book.getYear() + " "+ book.getCitationIndex();
     }
+    public  String toString(){
+        return this.getAuthor() + "\n" + this.getName() + "\n" +
+                this.getCost() + "\n" + this.getYear() + "\n"+ this.getCitationIndex();
+    }
     public void printBook(){
         System.out.println(getAuthor() + " " + getName() + " " + getCost()
                 + " " + getYear() + " "+ getCitationIndex());
+    }
+
+    public void writeInFile(Writer out) {
+        try {
+            out.write(this.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

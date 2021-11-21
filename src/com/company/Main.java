@@ -4,7 +4,16 @@ import com.company.Books.ScientificBook;
 import com.company.Halls.List;
 import com.company.Halls.ScientificLibraryHall;
 import com.company.Librarys.BidirectionalList;
+import com.company.Librarys.ChildrenLibrary;
+import com.company.Librarys.ILibrary;
 import com.company.Librarys.ScientificLibrary;
+
+import com.company.Libraries;
+
+import java.io.*;
+
+import static com.company.Libraries.inputLibrary;
+import static com.company.Libraries.outputLibrary;
 
 public class Main {
 
@@ -38,7 +47,7 @@ public class Main {
         halls.addToEnd(hall_2);
         halls.addToEnd(hall_3);
         //Создание экземпляра библиотеки
-        ScientificLibrary library = new ScientificLibrary(halls);
+        ILibrary library = new ScientificLibrary(halls);
         System.out.print("Books in library: ");
         library.printBooks();
         //измените книгу;
@@ -51,15 +60,15 @@ public class Main {
         //измените зал;
         System.out.println("2)Change hall:" + "\n" + "hall 2 before changing:");
         System.out.println("name:" +
-                library.getChildrenLibraryHallsByID(1).getName() + ", num of books:" +
-                library.getChildrenLibraryHallsByID(1).getScientificBooks().getLength());
+                library.getLibraryHallsByID(1).getName() + ", num of books:" +
+                library.getLibraryHallsByID(1).getBooks().getLength());
         ScientificLibraryHall newHall = new
                 ScientificLibraryHall("newHall", books2);
         library.changeHallByID(1, newHall);
         System.out.println("hall 2 after changing:");
         System.out.println("name:" +
-                library.getChildrenLibraryHallsByID(1).getName() + ", num of books:" +
-                library.getChildrenLibraryHallsByID(1).getScientificBooks().getLength());
+                library.getLibraryHallsByID(1).getName() + ", num of books:" +
+                library.getLibraryHallsByID(1).getBooks().getLength());
         // удалите книгу;
         System.out.println("3)delete book:" + "\n" + "book №1 before delete:");
         System.out.println(library.getBookByID(1).toString());
@@ -68,10 +77,49 @@ public class Main {
         System.out.println(library.getBookByID(1).toString());
         //Выведите автора самой лучшей книги;
         System.out.println("4)Print author of the best book:");
-        System.out.println("Best Author: " +
-                library.getBestBook().getAuthor());
+        System.out.println("Best Author: " + library.getBestBook().getAuthor());
         // выведите список названий книг по убыванию цены.
         System.out.println("5)Print list of the names books descending price: ");
         library.printBooks(library.selectionSortBookInHallByCost());
+
+        System.out.println("\n" + "BINARY WRITE/READ TEST");
+        library.printBooks();
+        ILibrary tempScientificLibrary = new ScientificLibrary();
+        //Запись в байтовый поток
+        try (FileOutputStream fos = new FileOutputStream("fileForByte.dat")) {
+            Libraries.outputLibrary(library, fos);
+            System.out.println("\n" + "Write successful");
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        //Чтение из байтового потока
+        try (FileInputStream fis = new FileInputStream("fileForByte.dat")) {
+            tempScientificLibrary = Libraries.inputLibrary(fis);
+            System.out.println("Read successful");
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+        tempScientificLibrary.printBooks();
+
+        System.out.println("\n" + "\n" + "TXT WRITE/READ TEST");
+        //Контрольные данные
+        library.printBooks();
+        //Запись в текстовый поток
+        try (Writer fos = new FileWriter("fileForTXT.txt")) {
+            Libraries.writeLibrary(library, fos);
+            System.out.println("\n" +"Write successful");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Чтение из текстового файла
+        try (Reader reader = new FileReader("fileForTXT.txt")) {
+            library =  Libraries.readLibrary(reader);
+            System.out.println("Read successful");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Проверка данных
+        library.printBooks();
     }
 }

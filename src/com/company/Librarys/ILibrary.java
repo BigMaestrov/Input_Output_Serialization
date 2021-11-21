@@ -3,19 +3,25 @@ package com.company.Librarys;
 import com.company.Books.IBook;
 import com.company.Halls.IHall;
 
-public interface ILibrary {
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.Writer;
+
+public interface ILibrary extends Serializable {
 
     public int getNumHalls();
 
+    public String getType();
+
     public void setNumHalls(int numHalls);
 
-    public BidirectionalList getScientificLibraryHalls();
+    public BidirectionalList getLibraryHalls();
 
-    public IHall getChildrenLibraryHallsByID(int id);
+    public IHall getLibraryHallsByID(int id);
 
     public IBook getBookByID(int id);
 
-    public void setScientificLibraryHalls(BidirectionalList scientificLibraryHalls) ;
+    public void setLibraryHalls(BidirectionalList scientificLibraryHalls) ;
 
     public int sumOfAllBooks();
 
@@ -38,4 +44,6 @@ public interface ILibrary {
     public void printBooks();
 
     public void printBooks(IBook[] books);
+
+    public void writeInFile(Writer out);
 }

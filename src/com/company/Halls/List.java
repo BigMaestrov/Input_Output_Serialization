@@ -3,8 +3,10 @@ package com.company.Halls;
 import com.company.Books.Book;
 import com.company.Books.IBook;
 
-public class List {
-    class Item {
+import java.io.Serializable;
+
+public class List implements Serializable {
+    class Item implements Serializable{
         private IBook data;
         private Item next;
 
@@ -70,6 +72,15 @@ public class List {
             temp = temp.next;
         }
         return temp;
+    }
+
+    public IBook getBookByID(int ID) {
+        if (ID < 0) return null;
+        Item temp = Head.next;
+        for (int i = 0; i < ID; i++) {
+            temp = temp.next;
+        }
+        return temp.getData();
     }
 
     public void addToEnd(IBook st) {

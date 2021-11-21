@@ -1,6 +1,10 @@
 package com.company.Books;
 
-public interface IBook {
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.Writer;
+
+public interface IBook extends Serializable {
 
     //методы получения и изменения Наименования
     public String getName();
@@ -19,4 +23,6 @@ public interface IBook {
     public void setYear(int year);
 
     public String toString();
+
+    public void writeInFile(Writer out);
 }

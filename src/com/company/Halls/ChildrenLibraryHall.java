@@ -1,25 +1,25 @@
 package com.company.Halls;
 
+import com.company.Books.ChildrenBook;
 import com.company.Books.IBook;
-import com.company.Books.ScientificBook;
 import com.company.Exceptions.BookIndexOutOfBoundsException;
 import com.company.Exceptions.InvalidBookCountException;
 
 import java.io.IOException;
 import java.io.Writer;
 
-public class ScientificLibraryHall implements IHall{
-    private List scientificBooks;
+public class ChildrenLibraryHall implements IHall{
+    private List childrenBooks;
     private String name;
     public List getBooks() {
-        return scientificBooks;
+        return childrenBooks;
     }
 
     public void setBooks(List scientificBooks) {
-        this.scientificBooks = null;
-        this.scientificBooks = new List();
+        this.childrenBooks = null;
+        this.childrenBooks = new List();
         for(int i=0;i<scientificBooks.getLength();i++){
-            this.scientificBooks.addToEnd(scientificBooks.getItemByID(i).getData());
+            this.childrenBooks.addToEnd(scientificBooks.getItemByID(i).getData());
         }
     }
     public String getName() {
@@ -29,29 +29,29 @@ public class ScientificLibraryHall implements IHall{
         this.name = name;
     }
 
-    public ScientificLibraryHall(String name, int numBook) throws InvalidBookCountException{
+    public ChildrenLibraryHall(String name, int numBook) throws InvalidBookCountException{
         if(numBook<0){
             throw new InvalidBookCountException();
         }
         setName(name);
-        this.scientificBooks = null;
-        this.scientificBooks = new List();
+        this.childrenBooks = null;
+        this.childrenBooks = new List();
         for(int i=0;i<numBook;i++){
-            scientificBooks.addToEnd(new ScientificBook());
+            childrenBooks.addToEnd(new ChildrenBook());
         }
     }
-    public ScientificLibraryHall() {
+    public ChildrenLibraryHall() {
         setName("default name");
         setBooks(new List());
     }
-    public ScientificLibraryHall(String name, List scientificBooks) {
+    public ChildrenLibraryHall(String name, List scientificBooks) {
         setName(name);
         setBooks(scientificBooks);
     }
     public void printBooks() {
-        for (int i = 0; i < scientificBooks.getLength(); i++) {
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
 
-            System.out.print(scientificBooks.getItemByID(i).getData().getName() + ", ");
+            System.out.print(childrenBooks.getItemByID(i).getData().getName() + ", ");
         }
     }
     public int getCostOfAllBooks(IHall childrenLibraryHall) {
@@ -62,39 +62,39 @@ public class ScientificLibraryHall implements IHall{
         return cost;
     }
     public IBook getBookByID(int number) throws BookIndexOutOfBoundsException {
-        if(number<0 || number > scientificBooks.getLength()){
+        if(number<0 || number > childrenBooks.getLength()){
             throw new BookIndexOutOfBoundsException();
         }
-        return this.scientificBooks.getItemByID(number).getData();
+        return this.childrenBooks.getItemByID(number).getData();
     }
     public void redactBook(IBook book, int number) throws BookIndexOutOfBoundsException{
-        if(number<0 || number > scientificBooks.getLength()){
+        if(number<0 || number > childrenBooks.getLength()){
             throw new BookIndexOutOfBoundsException();
         }
-        this.scientificBooks.getItemByID(number).setData((ScientificBook) book);
+        this.childrenBooks.getItemByID(number).setData((ChildrenBook) book);
     }
     public void addBook(IBook book, int number) throws BookIndexOutOfBoundsException{
-        if(number<0 || number > scientificBooks.getLength()+1){
+        if(number<0 || number > childrenBooks.getLength()+1){
             throw new BookIndexOutOfBoundsException();
         }
-        scientificBooks.addByID(number, book);
+        childrenBooks.addByID(number, book);
     }
     public void deleteBook(int number) throws BookIndexOutOfBoundsException{
-        if(number<0 || number > scientificBooks.getLength()){
+        if(number<0 || number > childrenBooks.getLength()){
             throw new BookIndexOutOfBoundsException();
         }
-        scientificBooks.removeByID(number);
+        childrenBooks.removeByID(number);
     }
     public IBook getBestBook() {
         int max = 0;
         int indexMax = 0;
-        for (int i = 0; i < scientificBooks.getLength(); i++) {
-            if (scientificBooks.getItemByID(i).getData().getCost() >= max) {
-                max = scientificBooks.getItemByID(i).getData().getCost();
+        for (int i = 0; i < childrenBooks.getLength(); i++) {
+            if (childrenBooks.getItemByID(i).getData().getCost() >= max) {
+                max = childrenBooks.getItemByID(i).getData().getCost();
                 indexMax = i;
             }
         }
-        return scientificBooks.getItemByID(indexMax).getData();
+        return childrenBooks.getItemByID(indexMax).getData();
     }
 
     public String toString(){

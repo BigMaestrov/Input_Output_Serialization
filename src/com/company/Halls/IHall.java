@@ -1,11 +1,14 @@
 package com.company.Halls;
 
 import com.company.Books.IBook;
-import com.company.Books.ScientificBook;
 
-public interface IHall {
-    public List getScientificBooks();
-    public void setScientificBooks(List scientificBooks) ;
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.Writer;
+
+public interface IHall extends Serializable {
+    public List getBooks();
+    public void setBooks(List scientificBooks) ;
     public String getName();
     public void setName(String name);
     public void printBooks() ;
@@ -15,4 +18,5 @@ public interface IHall {
     public void addBook(IBook book, int number);
     public void deleteBook(int number);
     public IBook getBestBook() ;
+    public void writeInFile(Writer out);
 }

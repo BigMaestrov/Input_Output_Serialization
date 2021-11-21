@@ -1,5 +1,8 @@
 package com.company.Books;
 
+import java.io.IOException;
+import java.io.Writer;
+
 public class ChildrenBook extends Book {
     private int minimalAge;
     public int getMinimalAge() {
@@ -27,5 +30,13 @@ public class ChildrenBook extends Book {
     public String toString(){
         return getAuthor() + " " + getName() + " " + getCost() +
                 " " + getYear() + " "+ getMinimalAge();
+    }
+
+    public void writeInFile(Writer out) {
+        try {
+            out.write(this.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
