@@ -4,16 +4,9 @@ import com.company.Books.ScientificBook;
 import com.company.Halls.List;
 import com.company.Halls.ScientificLibraryHall;
 import com.company.Librarys.BidirectionalList;
-import com.company.Librarys.ChildrenLibrary;
 import com.company.Librarys.ILibrary;
 import com.company.Librarys.ScientificLibrary;
-
-import com.company.Libraries;
-
 import java.io.*;
-
-import static com.company.Libraries.inputLibrary;
-import static com.company.Libraries.outputLibrary;
 
 public class Main {
 
